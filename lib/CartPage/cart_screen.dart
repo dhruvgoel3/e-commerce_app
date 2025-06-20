@@ -234,6 +234,13 @@ class _CartScreenState extends State<CartScreen> {
                           color: Colors.black,
                         ),
                       ),
+                      SizedBox(height: 16),
+                      _buildSummaryRow("Subtotal", '\$890.98'),
+                      _buildSummaryRow("Shipping", '\$10.98'),
+                      _buildSummaryRow("Tax", '\$25.98'),
+                      Divider(height: 24,color: Colors.black,),
+                      _buildSummaryRow("Total", '\$999.99',isTotal: true),
+
                     ],
                   ),
                 ),
