@@ -1,3 +1,4 @@
+import 'package:ecommerce_task/Auth/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: BottomNavbar(),
+      home: SignUpScreen(),
     );
   }
 }
