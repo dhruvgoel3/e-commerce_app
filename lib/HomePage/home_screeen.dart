@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
         slivers: [
           SliverAppBar(
             automaticallyImplyLeading: false,
-            expandedHeight: 100,
+            expandedHeight: height*0.12,
             floating: false,
             backgroundColor: Colors.transparent,
             flexibleSpace: Container(
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 CategoriesSection(),
-                SizedBox(height: 6,),
+                SizedBox(height: 6),
                 FeaturedProducts(),
                 NewArrival(),
               ],

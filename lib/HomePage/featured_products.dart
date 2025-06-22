@@ -103,7 +103,9 @@ class FeaturedProducts extends StatelessWidget {
                 ),
               ),
               TextButton(
-                onPressed: () {}, // You can navigate to View All screen here
+                onPressed: () {
+                  Get.to(() => ProductDetails());
+                }, // You can navigate to View All screen here
                 child: Text(
                   "View All",
                   style: TextStyle(color: Colors.blue, fontSize: 15),
