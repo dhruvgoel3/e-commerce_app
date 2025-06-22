@@ -1,21 +1,27 @@
-import 'package:ecommerce_task/bottom_nav.dart';
-import 'package:ecommerce_task/services/doc_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../bottom_nav.dart';
+import '../controllers/auth_controller.dart';
+import 'doc_service.dart';
 
 class AuthService {
-  var docdata = DocData();
-  CreateUser(data, context) async {
+  final docData = DocData();
+
+  Future<void> createUser(
+    Map<String, dynamic> data,
+    BuildContext context,
+  ) async {
     try {
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-            email: data['email']!,
-            password: data['password']!,
+            email: data['email'],
+            password: Get.find<AuthController>().PasswordController.text,
           );
-      await docdata.addUser(data);
-      Get.off(BottomNavbar());
+      await docData.addUser(data);
       print("User created: ${credential.user?.uid}");
+
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavbar()));
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -24,7 +30,13 @@ class AuthService {
         ),
       );
     } catch (e) {
-      print("Unexpected error: $e");
+      print("Signup error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Signup failed: $e"),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -34,9 +46,16 @@ class AuthService {
         email: data['email']!,
         password: data['password']!,
       );
-      Get.off(BottomNavbar());
-      await docdata.addUser(data);
-      print("Login successful: ${credential.user?.uid}");
+
+      await FirebaseAuth.instance.authStateChanges().first;
+
+      await docData.addUser(data);
+
+      print("✅ Login successful: ${credential.user?.uid}");
+
+      Future.delayed(Duration.zero, () {
+        Get.off(() => BottomNavbar());
+      });
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -46,6 +65,9 @@ class AuthService {
       );
     } catch (e) {
       print("Unexpected login error: $e");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Login failed: $e")));
     }
   }
 }

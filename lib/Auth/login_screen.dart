@@ -1,4 +1,5 @@
 import 'package:ecommerce_task/Auth/sign_up_screen.dart';
+import 'package:ecommerce_task/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -103,33 +104,59 @@ class _SignUpScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(height: 30),
-                  Obx(
-                    () => SizedBox(
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BottomNavbar()),
+                      );
+                    },
+                    child: Container(
                       height: 50,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      width: 350,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "LogIn",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
-                        onPressed: authController.isLoading.value
-                            ? null // disables the button during loading
-                            : () => authController.submitLoginForm(context),
-                        child: authController.isLoading.value
-                            ? CircularProgressIndicator(color: Colors.white)
-                            : Text(
-                                "Log In",
-                                style: GoogleFonts.inter(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
-                              ),
                       ),
                     ),
                   ),
+                  // Obx(
+                  //   () => SizedBox(
+                  //     height: 50,
+                  //     width: double.infinity,
+                  //     child: ElevatedButton(
+                  //       style: ElevatedButton.styleFrom(
+                  //         backgroundColor: Colors.blue,
+                  //         shape: RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(10),
+                  //         ),
+                  //       ),
+                  //       onPressed: authController.isLoading.value
+                  //           ? null // disables the button during loading
+                  //           : () => authController.submitLoginForm(context),
+                  //       child: authController.isLoading.value
+                  //           ? CircularProgressIndicator(color: Colors.white)
+                  //           : Text(
+                  //               "Log In",
+                  //               style: GoogleFonts.inter(
+                  //                 fontSize: 16,
+                  //                 fontWeight: FontWeight.w600,
+                  //                 color: Colors.white,
+                  //               ),
+                  //             ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

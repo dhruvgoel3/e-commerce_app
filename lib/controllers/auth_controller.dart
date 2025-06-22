@@ -28,20 +28,32 @@ class AuthController extends GetxController {
         "email": emailController.text.trim(),
         "password": PasswordController.text,
       };
-      await authService.CreateUser(data, context);
+      await authService.createUser(data, context);
       isLoading.value = false;
     }
   }
 
   Future<void> submitLoginForm(BuildContext context) async {
     if (formKey.currentState!.validate()) {
-      isLoading.value = true;
-      final data = {
-        "email": emailController.text.trim(),
-        "password": PasswordController.text,
-      };
-      await authService.login(data, context);
-      isLoading.value = false;
+      try {
+        isLoading.value = true;
+
+        final data = {
+          "email": emailController.text.trim(),
+          "password": PasswordController.text,
+        };
+
+        await authService.login(data, context);
+      } catch (e) {
+        print(" Error during login: $e");
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Login failed: $e")));
+      } finally {
+        isLoading.value = false;
+      }
+    } else {
+      print(" Form validation failed");
     }
   }
 
