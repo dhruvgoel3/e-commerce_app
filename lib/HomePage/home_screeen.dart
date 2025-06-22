@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             expandedHeight: 100,
             floating: false,
             backgroundColor: Colors.transparent,
@@ -81,51 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverToBoxAdapter(
             child: Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Container(
-                    height: 50,
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 20,
-                          offset: Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            textInputAction: TextInputAction.search, //
-                            onSubmitted: (value) {
-                              Get.to(() => SearchScreen()); //n
-                            },
-                            decoration: InputDecoration(
-                              hintText: 'Search Products...',
-                              prefixIcon: Icon(
-                                Icons.search,
-                                color: Colors.black,
-                              ),
-                              border: InputBorder.none,
-                              suffixIcon: Icon(Icons.tune, color: Colors.black),
-                              hintStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
                 CategoriesSection(),
                 SizedBox(height: 6,),
                 FeaturedProducts(),

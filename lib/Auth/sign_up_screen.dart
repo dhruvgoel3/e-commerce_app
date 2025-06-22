@@ -1,4 +1,6 @@
 import 'package:ecommerce_task/Auth/login_screen.dart';
+import 'package:ecommerce_task/bottom_nav.dart';
+import 'package:ecommerce_task/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -14,9 +16,8 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
-    final nameController = TextEditingController();
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
+    // Auth controller
+    final AuthController authController = Get.put(AuthController());
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -36,104 +37,137 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.blue.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          offset: Offset(0, 5),
-                          blurRadius: 10,
-                        ),
-                      ],
-                    ),
-                    child: TextField(
-                      controller: nameController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Username",
-                        prefixIcon: Icon(Icons.person, color: Colors.white),
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
+              child: Form(
+                key: authController.formKey,
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            offset: Offset(0, 5),
+                            blurRadius: 10,
+                          ),
+                        ],
+                      ),
+                      child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a username';
+                          }
+                          return null;
+                        },
+                        controller: authController.userNameController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Username",
+                          prefixIcon: Icon(Icons.person, color: Colors.white),
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.blue.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          offset: Offset(0, 5),
-                          blurRadius: 10,
-                        ),
-                      ],
-                    ),
-                    child: TextField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Email",
-                        prefixIcon: Icon(Icons.email, color: Colors.white),
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
+                    SizedBox(height: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            offset: Offset(0, 5),
+                            blurRadius: 10,
+                          ),
+                        ],
+                      ),
+                      child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+
+                        validator: authController.validateEmail,
+                        controller: authController.emailController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Email",
+                          prefixIcon: Icon(Icons.email, color: Colors.white),
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.blue.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          offset: Offset(0, 5),
-                          blurRadius: 10,
-                        ),
-                      ],
-                    ),
-                    child: TextField(
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Password",
-                        prefixIcon: Icon(Icons.lock, color: Colors.white),
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
+                    SizedBox(height: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            offset: Offset(0, 5),
+                            blurRadius: 10,
+                          ),
+                        ],
+                      ),
+                      child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a password';
+                          }
+                          if (value.length < 6) {
+                            return 'Password must be at least 6 characters';
+                          }
+                          return null;
+                        },
+
+                        controller: authController.PasswordController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Password",
+                          prefixIcon: Icon(Icons.lock, color: Colors.white),
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 30),
-                  Container(
-                    height: 50,
-                    width: 400,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "SignUp",
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                    SizedBox(height: 30),
+                    Obx(() => SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onPressed: () {
+                          authController.submitForm(context);
+                        },
+                        child: authController.isLoading.value
+                            ? CircularProgressIndicator(color: Colors.white)
+                            : Text(
+                          "Sign Up",
+                          style: GoogleFonts.inter(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ],
+                    )),
+
+                  ],
+                ),
               ),
             ),
             Padding(

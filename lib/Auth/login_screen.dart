@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../controllers/auth_controller.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -14,9 +16,8 @@ class LoginScreen extends StatefulWidget {
 class _SignUpScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    final nameController = TextEditingController();
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
+    final AuthController authController = Get.put(AuthController());
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -38,7 +39,6 @@ class _SignUpScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: Column(
                 children: [
-
                   SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
@@ -52,8 +52,9 @@ class _SignUpScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                    child: TextField(
-                      controller: emailController,
+                    child: TextFormField(
+                      validator: authController.validateEmail,
+                      controller: authController.emailController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Email",
@@ -78,8 +79,18 @@ class _SignUpScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                    child: TextField(
-                      controller: passwordController,
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a password';
+                        }
+                        if (value.length < 6) {
+                          return 'Password must be at least 6 characters';
+                        }
+                        return null;
+                      },
+                      controller: authController.PasswordController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Password",
@@ -92,20 +103,30 @@ class _SignUpScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(height: 30),
-                  Container(
-                    height: 50,
-                    width: 400,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Login",
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                  Obx(
+                    () => SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
+                        onPressed: authController.isLoading.value
+                            ? null // disables the button during loading
+                            : () => authController.submitLoginForm(context),
+                        child: authController.isLoading.value
+                            ? CircularProgressIndicator(color: Colors.white)
+                            : Text(
+                                "Log In",
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ),

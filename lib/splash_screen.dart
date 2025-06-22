@@ -1,3 +1,4 @@
+import 'package:ecommerce_task/Auth/sign_up_screen.dart';
 import 'package:ecommerce_task/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
@@ -9,16 +10,16 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // void initState() {
-  //   super.initState();
-  //
-  //   Future.delayed(Duration(seconds: 3), () {
-  //     Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(builder: (_) => BottomNavbar()),
-  //     );
-  //   });
-  // }
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => SignUpScreen()),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

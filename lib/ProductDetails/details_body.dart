@@ -185,47 +185,6 @@ class _DetailsBodyState extends State<DetailsBody> {
                   ),
                 ],
               ),
-              child: Row(
-                children: [
-                  Container(
-                    height: 48,
-                    width: 48,
-                    decoration: BoxDecoration(
-                      color: Colors.blue.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.shopping_cart_outlined,
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      width: 300,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Add to Cart",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
         ],
